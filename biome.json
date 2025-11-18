@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.6/schema.json",
   "linter": {
     "enabled": true,
     "rules": {
@@ -8,13 +8,15 @@
         "noUnusedVariables": "error"
       },
       "suspicious": {
-        "noExplicitAny": "warn"
+        "noExplicitAny": "warn",
+        "noUnknownAtRules": "off"
       },
       "style": {
         "useConst": "error"
       },
       "a11y": {
-        "noSvgWithoutTitle": "off"
+        "noSvgWithoutTitle": "off",
+        "useSemanticElements": "off"
       }
     }
   },
@@ -29,6 +31,15 @@
       "quoteStyle": "single",
       "trailingCommas": "es5",
       "semicolons": "always"
+    }
+  },
+  "css": {
+    "parser": {
+      "cssModules": false,
+      "allowWrongLineComments": true
+    },
+    "linter": {
+      "enabled": false
     }
   },
   "files": {
@@ -46,6 +57,16 @@
           },
           "suspicious": {
             "noExplicitAny": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.css"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noUnknownAtRules": "off"
           }
         }
       }

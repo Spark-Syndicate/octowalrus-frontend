@@ -30,7 +30,7 @@ export const FileUpload = () => {
   const [uploads, setUploads] = useState<UploadStatus[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const getUploadCredentials = async (
+  const getUploadCredentials = useCallback(async (
     filename: string,
     contentType: string
   ): Promise<UploadCredentials> => {
@@ -52,9 +52,9 @@ export const FileUpload = () => {
     const credentials = await response.json();
     console.log("Upload token response:", credentials);
     return credentials;
-  };
+  }, []);
 
-  const uploadFileToMinIO = async (
+  const uploadFileToMinIO = useCallback(async (
     file: File,
     credentials: UploadCredentials
   ): Promise<void> => {
@@ -76,7 +76,7 @@ export const FileUpload = () => {
     if (!response.ok) {
       throw new Error(`Upload failed: ${response.statusText}`);
     }
-  };
+  }, []);
 
   const handleFileUpload = useCallback(
     async (file: File) => {
@@ -127,7 +127,7 @@ export const FileUpload = () => {
         );
       }
     },
-    []
+    [getUploadCredentials, uploadFileToMinIO]
   );
 
   const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
@@ -196,6 +196,14 @@ export const FileUpload = () => {
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                fileInputRef.current?.click();
+              }
+            }}
+            role="button"
+            tabIndex={0}
             className={cn(
               "relative flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-12 transition-colors",
               isDragging

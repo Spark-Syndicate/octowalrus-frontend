@@ -44,6 +44,7 @@ export const ThemeToggleButton: React.FC = () => {
   const { mode, toggleColorMode } = useColorMode();
   return (
     <button
+      type="button"
       onClick={toggleColorMode}
       className="ml-1 rounded p-2 hover:bg-accent"
       aria-label="toggle dark mode"
