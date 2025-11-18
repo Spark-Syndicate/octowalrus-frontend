@@ -1,0 +1,52 @@
+# Default values for octowalrus-frontend
+
+# Global configuration
+global:
+  environment: development
+
+# Image configuration
+image:
+  repository: octowalrus-frontend-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Service configuration
+service:
+  app:
+    type: ClusterIP
+    port: 3000
+    targetPort: http
+  storybook:
+    type: ClusterIP
+    port: 6006
+    targetPort: storybook
+  
+deployment:
+  app:
+    containerPort: 3000
+    containerPortName: http
+  storybook:
+    containerPort: 6006
+    containerPortName: storybook
+
+# Ingress configuration
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: octowalrus-frontend.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+# Resource limits
+resources:
+  configMapName: octowalrus-frontend-app-config
+  requests:
+    memory: 512Mi
+    cpu: 250m
+  limits:
+    memory: 2Gi
+    cpu: 700m

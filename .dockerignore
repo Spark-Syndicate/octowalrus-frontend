@@ -1,0 +1,108 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Development files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env
+
+# Build outputs
+dist/
+build/
+.output/
+.next/
+.nuxt/
+*.log
+*.tgz
+*.tar.gz
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (not needed in container)
+README.md
+CHANGELOG.md
+LICENSE
+*.md
+docs/
+
+# # Development configuration
+# .editorconfig
+# .prettierrc*
+# .eslintrc*
+# *.tsbuildinfo
+# vitest.unit.config.ts
+# vite.config.d.ts
+# vitest.config.d.ts
+
+# # Testing files
+# **/*.test.*
+# **/*.spec.*
+# setupTests.ts
+# test-setup.ts
+# test-utils.tsx
+
+# Development tools
+lefthook.yml
+justfile
+tiltfile
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Kubernetes manifests (deploy separately)
+manifests/
+
+# Cache directories
+.cache/
+.parcel-cache/
+.vite/
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Security sensitive files
+.npmrc
+.yarnrc
+.dockerignore
+Dockerfile*
+docker-compose*.yml

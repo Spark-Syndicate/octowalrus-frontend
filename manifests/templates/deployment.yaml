@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Chart.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Chart.Name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: {{ .Values.deployment.app.containerPortName }}
+              containerPort: {{ .Values.deployment.app.containerPort }}
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.resources.configMapName }}
+          env:
+            - name: APP_ENV
+              value: {{ .Values.global.environment }}
+          resources:
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.resources.limits.memory }}
+              cpu: {{ .Values.resources.limits.cpu }}
+        # TODO: Add storybook deployment (it is buggy for now for some reason unknown)
+        # - name: storybook
+        #   image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        #   imagePullPolicy: {{ .Values.image.pullPolicy }}
+        #   command: ["npm", "run", "storybook", "--", "--no-open", "--port", "{{ .Values.deployment.storybook.containerPort }}", "--host", "0.0.0.0"]
+        #   ports:
+        #     - name: {{ .Values.deployment.storybook.containerPortName }}
+        #       containerPort: {{ .Values.deployment.storybook.containerPort }}
+        #       protocol: TCP
+        #   resources:
+        #     requests:
+        #       memory: 512Mi
+        #       cpu: 250m
+        #     limits:
+        #       memory: 1Gi
+        #       cpu: 500m
