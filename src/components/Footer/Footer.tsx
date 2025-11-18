@@ -1,44 +1,29 @@
-import { Box, Container, Divider, Link, Typography } from '@mui/material';
+import { Link } from "../ui/link";
+import { Separator } from "../ui/separator";
 
 export const Footer = () => {
   return (
-    <Box
-      component="footer"
-      sx={{
-        mt: 'auto',
-        py: 3,
-        px: 2,
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
-      }}
-    >
-      <Container maxWidth="lg">
-        <Divider sx={{ mb: 2 }} />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', sm: 'row' },
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: 2,
-          }}
-        >
-          <Typography variant="body2" color="text.secondary">
-            © {new Date().getFullYear()} octowalrus-frontend. All rights reserved.
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            <Link href="#" variant="body2" color="text.secondary">
+    <footer className="mt-auto border-t bg-muted/50 py-6">
+      <div className="container mx-auto max-w-7xl px-4">
+        <Separator className="mb-4" />
+        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} octowalrus-frontend. All rights
+            reserved.
+          </p>
+          <div className="flex gap-4">
+            <Link href="#" variant="muted" className="text-sm">
               Privacy Policy
             </Link>
-            <Link href="#" variant="body2" color="text.secondary">
+            <Link href="#" variant="muted" className="text-sm">
               Terms of Service
             </Link>
-            <Link href="#" variant="body2" color="text.secondary">
+            <Link href="#" variant="muted" className="text-sm">
               Contact
             </Link>
-          </Box>
-        </Box>
-      </Container>
-    </Box>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };

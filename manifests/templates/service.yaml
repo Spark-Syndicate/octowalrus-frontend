@@ -10,6 +10,7 @@ spec:
   ports:
     - port: {{ .Values.service.app.port }}
       targetPort: {{ .Values.service.app.targetPort }}
+      nodePort: {{ .Values.service.app.nodePort }}
       protocol: TCP
       name: http
   selector:

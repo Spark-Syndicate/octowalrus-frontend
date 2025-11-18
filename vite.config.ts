@@ -19,6 +19,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      '@': path.resolve(dirname, 'src'),
       '@assets': path.resolve(dirname, 'src/assets'),
       '@components': path.resolve(dirname, 'src/components'),
     },
@@ -29,7 +30,6 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          mui: ['@mui/material', '@mui/icons-material'],
         },
       },
     },

@@ -1,58 +1,64 @@
-import { ContactMail, Home, Info } from '@mui/icons-material';
+import { Home, Info } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import {
-  Box,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  type SxProps,
-  type Theme,
-} from '@mui/material';
+  SheetContent,
+} from "../ui/sheet";
 
 const navItems = [
-  { text: 'Home', icon: <Home />, path: '/' },
-  { text: 'About', icon: <Info />, path: '/about' },
-  { text: 'Contact', icon: <ContactMail />, path: '/contact' },
+  { text: "Home", icon: Home, path: "/" },
+  { text: "About", icon: Info, path: "/about" },
 ];
 
 interface NavDrawerProps {
-  variant: 'temporary' | 'permanent';
-  open?: boolean;
-  onClose?: () => void;
-  sx?: SxProps<Theme>;
+  variant: "temporary" | "permanent";
+  className?: string;
+  onNavigate?: () => void;
 }
 
-export const NavDrawer = ({ variant, open, onClose, sx }: NavDrawerProps) => {
+export const NavDrawer = ({
+  variant,
+  className,
+  onNavigate,
+}: NavDrawerProps) => {
+  const location = useLocation();
+
   const drawerContent = (
-    <Box sx={{ width: 250 }}>
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
+    <nav className="w-[250px] p-4">
+      <ul className="space-y-2">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = location.pathname === item.path;
+          return (
+            <li key={item.text}>
+              <Link
+                to={item.path}
+                onClick={onNavigate}
+                className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${
+                  isActive ? "bg-accent text-accent-foreground" : ""
+                }`}
+              >
+                <Icon className="h-5 w-5" />
+                <span>{item.text}</span>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 
-  return (
-    <Box component="nav">
-      <Drawer
-        variant={variant}
-        open={open}
-        onClose={onClose}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-        sx={sx}
-      >
+  if (variant === "temporary") {
+    return (
+      <SheetContent side="left" className={className}>
         {drawerContent}
-      </Drawer>
-    </Box>
+      </SheetContent>
+    );
+  }
+
+  // Permanent drawer
+  return (
+    <aside className={`hidden md:block ${className || ""}`}>
+      {drawerContent}
+    </aside>
   );
 };

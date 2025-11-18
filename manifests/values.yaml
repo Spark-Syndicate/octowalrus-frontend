@@ -13,9 +13,10 @@ image:
 # Service configuration
 service:
   app:
-    type: ClusterIP
+    type: NodePort
     port: 3000
     targetPort: http
+    nodePort: 30080
   storybook:
     type: ClusterIP
     port: 6006

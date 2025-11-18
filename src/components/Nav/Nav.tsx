@@ -1,43 +1,18 @@
-import { useMediaQuery, useTheme } from '@mui/material';
-import { useState } from 'react';
-import { NavDrawer } from './NavDrawer';
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { NavDrawer } from "./NavDrawer";
 
 export const Nav = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   if (isMobile) {
-    return (
-      <NavDrawer
-        variant="temporary"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 250 },
-        }}
-      />
-    );
+    // On mobile, the NavDrawer is controlled by the Header's menu button
+    return null;
   }
 
   return (
     <NavDrawer
       variant="permanent"
-      sx={{
-        display: { xs: 'none', md: 'block' },
-        width: 250,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
-          width: 250,
-          boxSizing: 'border-box',
-          position: 'relative',
-        },
-      }}
+      className="fixed left-0 top-14 h-[calc(100vh-3.5rem)] w-[250px] border-r bg-background"
     />
   );
 };
